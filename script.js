@@ -57,7 +57,73 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     const generateBoard = () =>{
         console.log(arrayOfImages);
-        body.innerHTML = 
+        body.innerHTML = `
+        <div class="startingScreen">
+        <section class="memoryGame">
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[0]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[0]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[1]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[1]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[2]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[2]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[3]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[3]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[4]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[4]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[5]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+      <div class="memoryCard" data-card="">
+        <img class="frontFace" src="${arrayOfImages[5]}" alt="" />
+        <img class="backFace" src="./backofcard.png" alt="background image" />
+      </div>
+    </section>
+    </div>
+        `
+    startPlaing()
+    }
+
+
+
+    const startPlaing = () =>{
+        const cardElList = document.querySelectorAll('.memoryCard');
+        cardElList.forEach((card) =>{
+            card.addEventListener('click', () =>{
+                console.log(card);
+                card.classList.add('flip')
+            })
+        })
     }
 
 
