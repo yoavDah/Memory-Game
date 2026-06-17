@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () =>{
       <div class="memoryCard" data-card="">
         <img class="frontFace" src="${arrayOfImages[5]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
-      </div>
+      </div>    
     </section>
     </div>
         `
