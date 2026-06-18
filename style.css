@@ -7,7 +7,26 @@
 }
 
 body{
-    background-color: #243b55;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #243b55;
+}
+
+h1, h2{
+  justify-self: center;
+}
+
+div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button{
+  justify-self: center;
+  align-self: center;
 }
 
 @keyframes slideUpAnimation {
@@ -24,12 +43,15 @@ body{
   animation-fill-mode: both;
 }
 
+
+
 .playAgain{
   justify-self: center;
-  
+  order: 11;
 }
 
 .startingScreen{
+    
     color: white;
     text-shadow: 2px 2px 4px #000000;
     display: flex;
@@ -74,6 +96,8 @@ button:active{
 }
 
 .memoryGame {
+  position: relative;
+  top: 70px;
   width: 700px;
   max-width: 90vw;
   display: flex;

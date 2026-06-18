@@ -121,7 +121,7 @@ const game = () =>{
     const shuffleCards = (cardElList) =>{
       cardElList.forEach((card) =>{
           const randomOrder = Math.floor(Math.random() * MAX_CARDS)
-          card.style.order = randomOrder
+          // card.style.order = randomOrder
       })
       startPlaying(cardElList)
     }
