@@ -7,13 +7,12 @@ let lockBoard = false
 let hasFlippedCard = false;
 let points = 0
 
-
 let chosenTheme;
 let indexOfSelectedApi;
 let firstCard;
 let secondCard;
 
-document.addEventListener('DOMContentLoaded', () =>{
+const game = () =>{
     const body = document.querySelector('body')
     const buttons = document.querySelectorAll('.button')
     buttons.forEach(button => button.addEventListener('click', (e) =>{
@@ -62,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     const generateBoard = () =>{
         body.innerHTML = `
-        <div class="startingScreen">
+      <div class="startingScreen">
         <section class="memoryGame">
       <div class="memoryCard" data-card="1">
         <img class="frontFace" src="${arrayOfImages[0]}" alt=""/>
@@ -113,10 +112,9 @@ document.addEventListener('DOMContentLoaded', () =>{
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>    
     </section>
-    </div>
+      </div>
         `
     const cardElList = document.querySelectorAll('.memoryCard');
-    
     shuffleCards(cardElList)
     }
 
@@ -173,7 +171,28 @@ document.addEventListener('DOMContentLoaded', () =>{
 
     const didPlayerFinish = () =>{
       if(points >= 6){
-        
+       setTimeout(() =>{
+        points = 0
+        chosenTheme = null
+        arrayOfImages.length = 0
+        indexOfSelectedApi = null
+        document.querySelector('.memoryGame').innerHTML += `
+        <button class="button playAgain">Play again?</button>`
+        document.querySelector(".playAgain").addEventListener('click', () =>{
+          body.innerHTML = `
+           <section class="startingScreen">
+               <h1>Memory Game</h1>
+               <h2>Choose theme</h2>
+                <button class="button" data-button="0">Dogs</button>
+               <button class="button" data-button="1">Cats</button>
+               <button class="button" data-button="2">Harry Potter</button>
+               <button class="button" data-button="random">Random</button>
+            </section>
+          `
+          game()
+        })
+       }, 700) 
+
       }
     }
 
@@ -182,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () =>{
       firstCard.classList.remove('flip')
       secondCard.classList.remove('flip')
       resetTurn()
-      }, 1500)
+      }, 900)
 
     }
 
@@ -192,4 +211,6 @@ document.addEventListener('DOMContentLoaded', () =>{
       firstCard = null
       secondCard = null
     }
-})
+}
+
+document.addEventListener('DOMContentLoaded', game())
