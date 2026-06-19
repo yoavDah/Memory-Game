@@ -2,6 +2,9 @@ const arrayOfAPI = ['https://dog.ceo/api/breed/hound/images','https://api.thecat
 const arrayOfImages = []
 const MAX_CARDS = 12;
 const MAX_POINTS = 6
+const lastIndexOfDogsApi = 810
+
+
 
 let lockBoard = false
 let hasFlippedCard = false;
@@ -11,6 +14,16 @@ let chosenTheme;
 let indexOfSelectedApi;
 let firstCard;
 let secondCard;
+
+
+// const runThrough = (data) => {
+//   console.log(data);
+//   console.log(data[2]);
+  
+  
+// }
+
+// runThrough()
 
 const game = () =>{
     const body = document.querySelector('body')
@@ -31,6 +44,7 @@ const game = () =>{
     const getImagesFromAPI = ()  =>{
         fetch(chosenTheme)
           .then(response => response.json())
+          .catch(error => alert("couldn't access api please try a different theme"))
           .then(data => getPictures(data))
     }
 
@@ -44,20 +58,33 @@ const game = () =>{
     }
 
 
-
-
-    const getPictures = (data) => {
-        for (let i = 0; i < 7; i++){
-            if (chosenTheme == arrayOfAPI[0]){
-                arrayOfImages.push(data.message[i])
+    const getPictures = (data) =>{
+      let i;
+      let j;
+      if (chosenTheme == arrayOfAPI[0]){
+          i = Math.floor(Math.random() * 800)
+          j = i + 6
+      } else if (chosenTheme == arrayOfAPI[2]){
+          i = Math.floor(Math.random() * 15)
+          j = i + 6
+      } else if (chosenTheme == arrayOfAPI[1]){
+          i = 0
+          j = i + 6
+      }
+      while(i < j){
+        i++
+          if (chosenTheme == arrayOfAPI[0]){
+              arrayOfImages.push(data.message[i])
             } else if (chosenTheme == arrayOfAPI[1]){
                 arrayOfImages.push(data[i].url)
             } else if (chosenTheme == arrayOfAPI[2]){
                 arrayOfImages.push(data[i].image)
             }
-        }
-       generateBoard() 
+         
+      }
+      generateBoard()
     }
+
 
     const generateBoard = () =>{
         body.innerHTML = `
@@ -212,5 +239,6 @@ const game = () =>{
       secondCard = null
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', game())
