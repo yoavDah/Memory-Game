@@ -1,4 +1,4 @@
-"# Memory-Game" 
+# Memory-Game 
 A memory game project for full-stack course
 focusing on the fetch function and working with API
 
