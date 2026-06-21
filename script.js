@@ -1,14 +1,12 @@
-const arrayOfAPI = ['https://dog.ceo/api/breed/hound/images','https://api.thecatapi.com/v1/images/search?limit=6' , 'https://hp-api.onrender.com/api/characters' ]
+const arrayOfAPI = ['https://dog.ceo/api/breed/hound/images','https://api.thecatapi.com/v1/images/search?limit=6','https://hp-api.onrender.com/api/characters',800,0,15 ]
 const arrayOfImages = []
 const MAX_CARDS = 12;
-const MAX_POINTS = 6
-const lastIndexOfDogsApi = 810
+const MAX_POINTS = 6;
 
 
-
-let lockBoard = false
+let lockBoard = false;
 let hasFlippedCard = false;
-let points = 0
+let points = 0;
 
 let chosenTheme;
 let indexOfSelectedApi;
@@ -16,28 +14,19 @@ let firstCard;
 let secondCard;
 
 
-// const runThrough = (data) => {
-//   console.log(data);
-//   console.log(data[2]);
-  
-  
-// }
-
-// runThrough()
-
 const game = () =>{
-    const body = document.querySelector('body')
-    const buttons = document.querySelectorAll('.button')
+    const body = document.querySelector('body');
+    const buttons = document.querySelectorAll('.button');
     buttons.forEach(button => button.addEventListener('click', (e) =>{
-    const selectedButton = e.target
-    indexOfSelectedApi = e.target.dataset.button
-
+    const selectedButton = e.targets;
+    indexOfSelectedApi = e.target.dataset.button;
+    
         if (indexOfSelectedApi == 'random') {
-            generateRandomNumber()
+            generateRandomNumber();
         }
 
-        chosenTheme = arrayOfAPI[indexOfSelectedApi]      
-        getImagesFromAPI()
+        chosenTheme = arrayOfAPI[indexOfSelectedApi]      ;
+        getImagesFromAPI();
     }))
     
     
@@ -52,37 +41,29 @@ const game = () =>{
     const generateRandomNumber = () =>{
         const randomNum = Math.floor(Math.random() * 3 )
         if (randomNum > 2){
-            generateRandomNumber()
+            generateRandomNumber();
         }
-        indexOfSelectedApi = randomNum
+        indexOfSelectedApi = randomNum;
     }
 
 
     const getPictures = (data) =>{
-      let i;
-      let j;
-      if (chosenTheme == arrayOfAPI[0]){
-          i = Math.floor(Math.random() * 800)
-          j = i + 6
-      } else if (chosenTheme == arrayOfAPI[2]){
-          i = Math.floor(Math.random() * 15)
-          j = i + 6
-      } else if (chosenTheme == arrayOfAPI[1]){
-          i = 0
-          j = i + 6
-      }
+      let x = arrayOfAPI[arrayOfAPI.indexOf(chosenTheme ) + 3];
+      let i = Math.floor(Math.random() * x);
+      let j = i + 6;
+      
       while(i < j){
-        i++
+        i++;
           if (chosenTheme == arrayOfAPI[0]){
-              arrayOfImages.push(data.message[i])
+              arrayOfImages.push(data.message[i]);
             } else if (chosenTheme == arrayOfAPI[1]){
-                arrayOfImages.push(data[i].url)
+                arrayOfImages.push(data[i].url);
             } else if (chosenTheme == arrayOfAPI[2]){
-                arrayOfImages.push(data[i].image)
+                arrayOfImages.push(data[i].image);               
             }
          
       }
-      generateBoard()
+      generateBoard();
     }
 
 
@@ -90,51 +71,51 @@ const game = () =>{
         body.innerHTML = `
       <div class="startingScreen">
         <section class="memoryGame">
-      <div class="memoryCard" data-card="1">
+      <div class="memoryCard canClickOn" data-card="1">
         <img class="frontFace" src="${arrayOfImages[0]}" alt=""/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="1">
+      <div class="memoryCard canClickOn" data-card="1">
         <img class="frontFace" src="${arrayOfImages[0]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="2">
+      <div class="memoryCard canClickOn" data-card="2">
         <img class="frontFace" src="${arrayOfImages[1]}" alt=""  />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="2">
+      <div class="memoryCard canClickOn" data-card="2">
         <img class="frontFace" src="${arrayOfImages[1]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="3">
+      <div class="memoryCard canClickOn" data-card="3">
         <img class="frontFace" src="${arrayOfImages[2]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="3">
+      <div class="memoryCard canClickOn" data-card="3">
         <img class="frontFace" src="${arrayOfImages[2]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="4">
+      <div class="memoryCard canClickOn" data-card="4">
         <img class="frontFace" src="${arrayOfImages[3]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="4">
+      <div class="memoryCard canClickOn" data-card="4">
         <img class="frontFace" src="${arrayOfImages[3]}" alt=""/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="5">
+      <div class="memoryCard canClickOn" data-card="5">
         <img class="frontFace" src="${arrayOfImages[4]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="5">
+      <div class="memoryCard canClickOn" data-card="5">
         <img class="frontFace" src="${arrayOfImages[4]}" alt=""/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="6">
+      <div class="memoryCard canClickOn" data-card="6">
         <img class="frontFace" src="${arrayOfImages[5]}" alt="" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
-      <div class="memoryCard" data-card="6">
+      <div class="memoryCard canClickOn" data-card="6">
         <img class="frontFace" src="${arrayOfImages[5]}" alt=""/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>    
@@ -142,67 +123,67 @@ const game = () =>{
       </div>
         `
     const cardElList = document.querySelectorAll('.memoryCard');
-    shuffleCards(cardElList)
+    shuffleCards(cardElList);
     }
 
     const shuffleCards = (cardElList) =>{
       cardElList.forEach((card) =>{
-          const randomOrder = Math.floor(Math.random() * MAX_CARDS)
-          card.style.order = randomOrder
+          const randomOrder = Math.floor(Math.random() * MAX_CARDS);
+          card.style.order = randomOrder;
       })
-      startPlaying(cardElList)
+      startPlaying(cardElList);
     }
 
    const handleFlip = (e) =>{
-                const card = e.target.parentElement
-                
+                const card = e.target.parentElement;
+
                 if(lockBoard){
                   return;
                 }
 
-                card.classList.add('flip')
+                card.classList.add('flip');
 
                 if (!hasFlippedCard){
-                  hasFlippedCard = true
-                  firstCard = card
+                  hasFlippedCard = true;
+                  firstCard = card;
                   return;
                 }
 
-                secondCard = card
-                lockBoard = true
+                secondCard = card;
+                lockBoard = true;
                 
-                checkResaults()
+                checkResaults();
 
             }
 
     const startPlaying = (cardElList) =>{
         cardElList.forEach((card) =>{
-            card.addEventListener('click', handleFlip)
+            card.addEventListener('click', handleFlip);
         })
     }
 
 
     const checkResaults = () =>{
       if (firstCard.dataset.card === secondCard.dataset.card){
-          firstCard.removeEventListener('click',handleFlip)
-          secondCard.removeEventListener('click', handleFlip)
-          resetTurn()
-          points += 1
-          console.log(points);
-          
-          didPlayerFinish()
+          firstCard.removeEventListener('click',handleFlip);
+          secondCard.removeEventListener('click', handleFlip);
+          firstCard.classList.remove('canClickOn');
+          secondCard.classList.remove('canClickOn');
+          resetTurn();
+          points += 1;
+          didPlayerFinish();
       } else {
-          flipCardsBack()
+          flipCardsBack();
     }
     }
 
     const didPlayerFinish = () =>{
       if(points >= 6){
        setTimeout(() =>{
-        points = 0
-        chosenTheme = null
-        arrayOfImages.length = 0
-        indexOfSelectedApi = null
+        points = 0;
+        chosenTheme = null;
+        arrayOfImages.length = 0;
+        indexOfSelectedApi = null;
         document.querySelector('.memoryGame').innerHTML += `
         <button class="button playAgain">Play again?</button>`
         document.querySelector(".playAgain").addEventListener('click', () =>{
@@ -216,29 +197,28 @@ const game = () =>{
                <button class="button" data-button="random">Random</button>
             </section>
           `
-          game()
+          game();
         })
-       }, 700) 
+       }, 700);
 
       }
     }
 
     const flipCardsBack = () => {
       setTimeout(() =>{
-      firstCard.classList.remove('flip')
-      secondCard.classList.remove('flip')
-      resetTurn()
-      }, 900)
-
+      firstCard.classList.remove('flip');
+      secondCard.classList.remove('flip');
+      resetTurn();
+      }, 900);
     }
 
     const resetTurn = () => {
-      hasFlippedCard = false
-      lockBoard = false
-      firstCard = null
-      secondCard = null
+      hasFlippedCard = false;
+      lockBoard = false;
+      firstCard = null;
+      secondCard = null;
     }
 }
 
 
-document.addEventListener('DOMContentLoaded', game())
+document.addEventListener('DOMContentLoaded', game());
