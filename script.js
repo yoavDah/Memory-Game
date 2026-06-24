@@ -1,7 +1,12 @@
-const arrayOfAPI = ['https://dog.ceo/api/breed/hound/images','https://api.thecatapi.com/v1/images/search?limit=6','https://hp-api.onrender.com/api/characters',800,0,15 ]
+
+
+const arrayOfAPI = ['https://dog.ceo/api/breed/hound/images','https://api.restcountries.com/countries/v5?limit=50','https://hp-api.onrender.com/api/characters',799,50,14]
+const apiKeys = [null, { headers: { 'Authorization': 'Bearer rc_live_8ef3b7eb85a64734910c0ea5230765f2' } },null]
 const arrayOfImages = []
 const MAX_CARDS = 12;
 const MAX_POINTS = 6;
+
+
 
 
 let lockBoard = false;
@@ -18,7 +23,7 @@ const game = () =>{
     const body = document.querySelector('body');
     const buttons = document.querySelectorAll('.button');
     buttons.forEach(button => button.addEventListener('click', (e) =>{
-    const selectedButton = e.targets;
+    // const selectedButton = e.targets;
     indexOfSelectedApi = e.target.dataset.button;
     
         if (indexOfSelectedApi == 'random') {
@@ -26,12 +31,12 @@ const game = () =>{
         }
 
         chosenTheme = arrayOfAPI[indexOfSelectedApi]      ;
-        getImagesFromAPI();
+        getImagesFromAPI(indexOfSelectedApi);
     }))
-    
-    
-    const getImagesFromAPI = ()  =>{
-        fetch(chosenTheme)
+
+
+    const getImagesFromAPI = (index)  =>{
+        fetch(chosenTheme, apiKeys[index])
           .then(response => response.json())
           .catch(error => alert("couldn't access api please try a different theme"))
           .then(data => getPictures(data))
@@ -48,20 +53,20 @@ const game = () =>{
 
 
     const getPictures = (data) =>{
-      let x = arrayOfAPI[arrayOfAPI.indexOf(chosenTheme ) + 3];
+      let x = arrayOfAPI[arrayOfAPI.indexOf(chosenTheme) + 3];
       let i = Math.floor(Math.random() * x);
+      i++
       let j = i + 6;
-      
       while(i < j){
-        i++;
+
           if (chosenTheme == arrayOfAPI[0]){
               arrayOfImages.push(data.message[i]);
             } else if (chosenTheme == arrayOfAPI[1]){
-                arrayOfImages.push(data[i].url);
+                arrayOfImages.push(data.data.objects[i].flag.url_svg);
             } else if (chosenTheme == arrayOfAPI[2]){
                 arrayOfImages.push(data[i].image);               
             }
-         
+                 i++;
       }
       generateBoard();
     }

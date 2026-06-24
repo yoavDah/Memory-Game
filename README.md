@@ -8,7 +8,6 @@ and you can either click on the "index.html" file or open it in vscode
 and open it with live server
 
 ## Prerequisites
-
 make sure you have vscode and the live server extention
 
 
