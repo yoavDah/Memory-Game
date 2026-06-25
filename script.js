@@ -1,4 +1,4 @@
-const arrayOfAPI = ['https://dog.ceo/api/breed/hoaaund/images','https://api.restcountries.com/countries/v5?limit=50','https://hp-api.onrender.com/api/characters',799,50,14]
+const arrayOfAPI = ['https://dog.ceo/api/breed/hoaaund/images','https://api.restcountries.com/countries/v5?limit=50','https://hp-api.onrender.com/api/characters']
 const apiKeys = [null, { headers: { 'Authorization': 'Bearer rc_live_8ef3b7eb85a64734910c0ea5230765f2' } },null]
 const arrayOfImages = []
 const arrayOfLimits = [799,50,14]
