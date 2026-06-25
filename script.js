@@ -1,13 +1,10 @@
-
-
-const arrayOfAPI = ['https://dog.ceo/api/breed/hound/images','https://api.restcountries.com/countries/v5?limit=50','https://hp-api.onrender.com/api/characters',799,50,14]
+const arrayOfAPI = ['https://dog.ceo/api/breed/hoaaund/images','https://api.restcountries.com/countries/v5?limit=50','https://hp-api.onrender.com/api/characters',799,50,14]
 const apiKeys = [null, { headers: { 'Authorization': 'Bearer rc_live_8ef3b7eb85a64734910c0ea5230765f2' } },null]
 const arrayOfImages = []
+const arrayOfLimits = [799,50,14]
+const arrayOfThemeNames = ['dog picture', 'flag picture', 'harry potter character']
 const MAX_CARDS = 12;
 const MAX_POINTS = 6;
-
-
-
 
 let lockBoard = false;
 let hasFlippedCard = false;
@@ -23,7 +20,6 @@ const game = () =>{
     const body = document.querySelector('body');
     const buttons = document.querySelectorAll('.button');
     buttons.forEach(button => button.addEventListener('click', (e) =>{
-    // const selectedButton = e.targets;
     indexOfSelectedApi = e.target.dataset.button;
     
         if (indexOfSelectedApi == 'random') {
@@ -34,13 +30,20 @@ const game = () =>{
         getImagesFromAPI(indexOfSelectedApi);
     }))
 
-
-    const getImagesFromAPI = (index)  =>{
-        fetch(chosenTheme, apiKeys[index])
-          .then(response => response.json())
-          .catch(error => alert("couldn't access api please try a different theme"))
-          .then(data => getPictures(data))
+    async function getImagesFromAPI(index) {
+      body.innerHTML = `<h1 class='loadingScreen'>Loading</h1>`
+        try{
+           const res = await fetch(chosenTheme, apiKeys[index])
+           const data = await res.json();
+           getPictures(data)
+        } catch(error){
+            alert(`couldn't access this data please try again or chose another theme`)
+            arrayOfImages.length = 0
+            backToMainMenu()
+           }
     }
+
+
 
 
     const generateRandomNumber = () =>{
@@ -53,75 +56,87 @@ const game = () =>{
 
 
     const getPictures = (data) =>{
-      let x = arrayOfAPI[arrayOfAPI.indexOf(chosenTheme) + 3];
+      let x = arrayOfLimits[indexOfSelectedApi];
       let i = Math.floor(Math.random() * x);
       i++
       let j = i + 6;
-      while(i < j){
+     try{
 
-          if (chosenTheme == arrayOfAPI[0]){
-              arrayOfImages.push(data.message[i]);
-            } else if (chosenTheme == arrayOfAPI[1]){
-                arrayOfImages.push(data.data.objects[i].flag.url_svg);
-            } else if (chosenTheme == arrayOfAPI[2]){
-                arrayOfImages.push(data[i].image);               
+       while(i < j){
+         if (chosenTheme == arrayOfAPI[0]){
+           arrayOfImages.push(data.message[i]);
+          } else if (chosenTheme == arrayOfAPI[1]){
+            arrayOfImages.push(data.data.objects[i].flag.url_svg);
+          } else if (chosenTheme == arrayOfAPI[2]){
+            arrayOfImages.push(data[i].image);               
+          }
+          i++;
+
+          
+        }
+          if (arrayOfImages[0] == undefined){
+              throw new Error("Something went wrong, please try again or try a different theme")
             }
-                 i++;
+      } catch(error){
+        alert(error.message);
+        arrayOfImages.length = 0
+        backToMainMenu()
+        return;
       }
-      generateBoard();
+      generateBoard(arrayOfThemeNames[indexOfSelectedApi]);
     }
 
 
-    const generateBoard = () =>{
+    const generateBoard = (alt) =>{
         body.innerHTML = `
       <div class="startingScreen">
         <section class="memoryGame">
       <div class="memoryCard canClickOn" data-card="1">
-        <img class="frontFace" src="${arrayOfImages[0]}" alt=""/>
+        <img class="frontFace" src="${arrayOfImages[0]}" alt="${alt}"/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="1">
-        <img class="frontFace" src="${arrayOfImages[0]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[0]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="2">
-        <img class="frontFace" src="${arrayOfImages[1]}" alt=""  />
+        <img class="frontFace" src="${arrayOfImages[1]}" alt="${alt}"  />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="2">
-        <img class="frontFace" src="${arrayOfImages[1]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[1]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="3">
-        <img class="frontFace" src="${arrayOfImages[2]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[2]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="3">
-        <img class="frontFace" src="${arrayOfImages[2]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[2]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="4">
-        <img class="frontFace" src="${arrayOfImages[3]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[3]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="4">
-        <img class="frontFace" src="${arrayOfImages[3]}" alt=""/>
+        <img class="frontFace" src="${arrayOfImages[3]}" alt="${alt}"/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="5">
-        <img class="frontFace" src="${arrayOfImages[4]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[4]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="5">
-        <img class="frontFace" src="${arrayOfImages[4]}" alt=""/>
+        <img class="frontFace" src="${arrayOfImages[4]}" alt="${alt}"/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="6">
-        <img class="frontFace" src="${arrayOfImages[5]}" alt="" />
+        <img class="frontFace" src="${arrayOfImages[5]}" alt="${alt}" />
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>
       <div class="memoryCard canClickOn" data-card="6">
-        <img class="frontFace" src="${arrayOfImages[5]}" alt=""/>
+        <img class="frontFace" src="${arrayOfImages[5]}" alt="${alt}"/>
         <img class="backFace" src="./backofcard.png" alt="background image" />
       </div>    
     </section>
@@ -182,30 +197,34 @@ const game = () =>{
     }
     }
 
-    const didPlayerFinish = () =>{
-      if(points >= 6){
-       setTimeout(() =>{
+    const backToMainMenu = () =>{
         points = 0;
         chosenTheme = null;
         arrayOfImages.length = 0;
         indexOfSelectedApi = null;
-        document.querySelector('.memoryGame').innerHTML += `
-        <button class="button playAgain">Play again?</button>`
-        document.querySelector(".playAgain").addEventListener('click', () =>{
-          body.innerHTML = `
+        body.innerHTML = `
            <section class="startingScreen">
-               <h1>Memory Game</h1>
-               <h2>Choose theme</h2>
-                <button class="button" data-button="0">Dogs</button>
-               <button class="button" data-button="1">Cats</button>
-               <button class="button" data-button="2">Harry Potter</button>
-               <button class="button" data-button="random">Random</button>
+              <h1>Memory Game</h1>
+              <h2>Choose theme</h2>
+              <button class="button" data-button="0">Dogs</button>
+              <button class="button" data-button="1">Flags</button>
+              <button class="button" data-button="2">Harry Potter</button>
+              <button class="button" data-button="random">Random</button>
             </section>
           `
           game();
-        })
-       }, 700);
+    }
 
+    const resetGame = () =>{
+ 
+        document.querySelector('.memoryGame').innerHTML += `
+        <button class="button playAgain">Play again?</button>`
+        document.querySelector(".playAgain").addEventListener('click',backToMainMenu)
+    }
+
+    const didPlayerFinish = () =>{
+      if(points >= 6){
+       setTimeout(resetGame(), 700);
       }
     }
 
