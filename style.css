@@ -94,10 +94,12 @@ button:active{
 }
 
 .loadingScreen{
-  color: rgb(16, 18, 20);
+  color: rgb(255, 255, 255);
   font-size: 150px;
   position: absolute;
   top: 100px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 2px 2px 4px #000000;
 }
 
 .memoryGame {

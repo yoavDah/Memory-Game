@@ -57,8 +57,9 @@ const game = () =>{
 
     const getPictures = (data) =>{
       let x = arrayOfLimits[indexOfSelectedApi];
-      let i = Math.floor(Math.random() * x);
-      i++
+      let i = Math.floor(Math.random() * x) + 1;
+      console.log(i);
+      
       let j = i + 6;
      try{
 
@@ -75,10 +76,10 @@ const game = () =>{
           
         }
           if (arrayOfImages[0] == undefined){
-              throw new Error("Something went wrong, please try again or try a different theme")
+              throw new Error()
             }
       } catch(error){
-        alert(error.message);
+        alert("Something went wrong, please try again or try a different theme");
         arrayOfImages.length = 0
         backToMainMenu()
         return;
