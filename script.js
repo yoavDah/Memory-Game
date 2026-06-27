@@ -5,6 +5,7 @@ const arrayOfLimits = [799,50,14]
 const arrayOfThemeNames = ['dog picture', 'flag picture', 'harry potter character']
 const MAX_CARDS = 12;
 const MAX_POINTS = 6;
+const errorMessage = "Something went wrong, please try again or try a different theme";
 
 let lockBoard = false;
 let hasFlippedCard = false;
@@ -37,8 +38,7 @@ const game = () =>{
            const data = await res.json();
            getPictures(data)
         } catch(error){
-            alert(`couldn't access this data please try again or chose another theme`)
-            arrayOfImages.length = 0
+            alert(errorMessage)
             backToMainMenu()
            }
     }
@@ -55,32 +55,33 @@ const game = () =>{
     }
 
 
-    const getPictures = (data) =>{
-      let x = arrayOfLimits[indexOfSelectedApi];
-      let i = Math.floor(Math.random() * x) + 1;
-      console.log(i);
-      
-      let j = i + 6;
-     try{
-
-       while(i < j){
-         if (chosenTheme == arrayOfAPI[0]){
-           arrayOfImages.push(data.message[i]);
-          } else if (chosenTheme == arrayOfAPI[1]){
-            arrayOfImages.push(data.data.objects[i].flag.url_svg);
-          } else if (chosenTheme == arrayOfAPI[2]){
-            arrayOfImages.push(data[i].image);               
+    const checkIfAllPicturesRendered = (pic) =>{
+          if(pic == undefined){
+            throw new Error()
+            return;
           }
-          i++;
+    }
 
-          
+    const getPictures = (data) =>{
+      let limit = arrayOfLimits[indexOfSelectedApi];
+      let firstPicture = Math.floor(Math.random() * limit) + 1;
+      let lastPicture = firstPicture + 6;
+     try{
+       while(firstPicture < lastPicture){
+         if (chosenTheme == arrayOfAPI[0]){
+           arrayOfImages.push(data.message[firstPicture]);
+          } else if (chosenTheme == arrayOfAPI[1]){
+            arrayOfImages.push(data.data.objects[firstPicture].flag.url_svg);
+          } else if (chosenTheme == arrayOfAPI[2]){
+            arrayOfImages.push(data[firstPicture].image);               
+          }
+          firstPicture++;          
         }
-          if (arrayOfImages[0] == undefined){
-              throw new Error()
-            }
+        
+        arrayOfImages.forEach(checkIfAllPicturesRendered)
+           
       } catch(error){
-        alert("Something went wrong, please try again or try a different theme");
-        arrayOfImages.length = 0
+        alert(errorMessage);
         backToMainMenu()
         return;
       }
