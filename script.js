@@ -10,9 +10,6 @@ const errorMessage = "Something went wrong, please try again or try a different 
 let lockBoard = false;
 let hasFlippedCard = false;
 let points = 0;
-
-
-
 let chosenTheme;
 let indexOfSelectedApi;
 let firstCard;
@@ -68,7 +65,7 @@ const game = () =>{
       let limit = arrayOfLimits[indexOfSelectedApi];
       let firstPicture = Math.floor(Math.random() * limit) + 1;
       let lastPicture = firstPicture + 6;
-            const paths = {
+      const paths = {
         dogs: (data, firstPicture) => data.message[firstPicture],
         flags: (data, firstPicture) => data.data.objects[firstPicture].flag.url_svg,
         harryPotter: (data, firstPicture) =>  data[firstPicture].image
@@ -80,6 +77,8 @@ const game = () =>{
 
         switch(chosenTheme)
           {
+            default: throw new Error()
+            break;
             case arrayOfAPI[0]: 
               arrayOfImages.push(paths.dogs(data,firstPicture))
             break;
@@ -89,10 +88,7 @@ const game = () =>{
             case arrayOfAPI[2]:
               arrayOfImages.push(paths.harryPotter(data,firstPicture))
             break;
-            default : throw new Error()
-            break;
           }
-
           firstPicture++;          
         }
         
