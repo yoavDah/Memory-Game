@@ -11,6 +11,8 @@ let lockBoard = false;
 let hasFlippedCard = false;
 let points = 0;
 
+
+
 let chosenTheme;
 let indexOfSelectedApi;
 let firstCard;
@@ -38,7 +40,7 @@ const game = () =>{
            const data = await res.json();
            getPictures(data)
         } catch(error){
-            alert(errorMessage)
+            alert(error.message)
             backToMainMenu()
            }
     }
@@ -66,15 +68,31 @@ const game = () =>{
       let limit = arrayOfLimits[indexOfSelectedApi];
       let firstPicture = Math.floor(Math.random() * limit) + 1;
       let lastPicture = firstPicture + 6;
+            const paths = {
+        dogs: (data, firstPicture) => data.message[firstPicture],
+        flags: (data, firstPicture) => data.data.objects[firstPicture].flag.url_svg,
+        harryPotter: (data, firstPicture) =>  data[firstPicture].image
+
+      }
+      
      try{
        while(firstPicture < lastPicture){
-         if (chosenTheme == arrayOfAPI[0]){
-           arrayOfImages.push(data.message[firstPicture]);
-          } else if (chosenTheme == arrayOfAPI[1]){
-            arrayOfImages.push(data.data.objects[firstPicture].flag.url_svg);
-          } else if (chosenTheme == arrayOfAPI[2]){
-            arrayOfImages.push(data[firstPicture].image);               
+
+        switch(chosenTheme)
+          {
+            case arrayOfAPI[0]: 
+              arrayOfImages.push(paths.dogs(data,firstPicture))
+            break;
+            case arrayOfAPI[1]:
+              arrayOfImages.push(paths.flags(data,firstPicture))
+            break;
+            case arrayOfAPI[2]:
+              arrayOfImages.push(paths.harryPotter(data,firstPicture))
+            break;
+            default : throw new Error()
+            break;
           }
+
           firstPicture++;          
         }
         
